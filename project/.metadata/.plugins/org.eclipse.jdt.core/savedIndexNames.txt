@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+D:\Scoala\anul IV\ProiectVVS\VVS\project\.metadata\.plugins\org.eclipse.jdt.core
+958178633.index
+2778597413.index
+1708545053.index
+4236389223.index
