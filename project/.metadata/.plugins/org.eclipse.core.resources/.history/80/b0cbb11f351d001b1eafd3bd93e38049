@@ -154,69 +154,6 @@ public class WebserverTest {
 		catch (InterruptedException e) {System.out.println("IException occured");}
 	}
 	
-	@Test
-	public void aaaDirTest() {
-		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/aaa/index.html");
-			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
-			
-			out.println("GET /aaa/ HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
-		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
-	}
-	
-	@Test
-	public void aaaDir_bTest() {
-		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/aaa/b.html");
-			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
-			
-			out.println("GET /aaa/b.html HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
-		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
-	}
 	
 //	@Test
 //	public void emptyTest() {

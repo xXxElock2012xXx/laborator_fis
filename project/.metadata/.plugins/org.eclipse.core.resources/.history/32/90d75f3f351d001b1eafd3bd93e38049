@@ -187,11 +187,11 @@ public class WebserverTest {
 	}
 	
 	@Test
-	public void aaaDir_bTest() {
+	public void aaaDirbTest() {
 		try {
 			int fileLength=0;
 			byte[] fileData, readData;
-			File file = new File("TestSite/aaa/b.html");
+			File file = new File("TestSite/aaa/index.html");
 			
 			fileLength = (int) file.length();
 			fileData = new byte[fileLength+1];
@@ -200,7 +200,7 @@ public class WebserverTest {
 			fileIn.read(fileData);
 			fileIn.close();
 			
-			out.println("GET /aaa/b.html HTTP/1.1");
+			out.println("GET /aaa/ HTTP/1.1");
 			
 			BufferedInputStream bis = new BufferedInputStream(myIn);
 			

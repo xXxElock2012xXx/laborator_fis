@@ -200,7 +200,7 @@ public class WebserverTest {
 			fileIn.read(fileData);
 			fileIn.close();
 			
-			out.println("GET /aaa/b.html HTTP/1.1");
+			out.println("GET /aaa/ HTTP/1.1");
 			
 			BufferedInputStream bis = new BufferedInputStream(myIn);
 			
