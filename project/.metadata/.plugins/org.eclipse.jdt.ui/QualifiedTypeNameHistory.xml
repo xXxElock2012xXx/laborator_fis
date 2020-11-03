@@ -6,4 +6,5 @@
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
+    <fullyQualifiedTypeName name="com.sun.tools.javac.util.Pair"/>
 </qualifiedTypeNameHistroy>

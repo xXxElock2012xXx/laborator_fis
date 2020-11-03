@@ -68,7 +68,7 @@ public class Webserver extends Thread {
 			String method = commandLine.substring(0, commandLine.indexOf(' '));
 			commandLine = commandLine.substring(commandLine.indexOf(' ')+1);
 			String requestedFile = commandLine.substring(0, commandLine.lastIndexOf("HTTP/")).trim();
-			requestedFile = Webserver.rootFolder + requestedFile;
+			requestedFile = this.rootFolder + requestedFile;
 			
 			if(requestedFile.endsWith("/"))
 				requestedFile = requestedFile + "index.html"; // in index.html tin minte linkuri catre pagini

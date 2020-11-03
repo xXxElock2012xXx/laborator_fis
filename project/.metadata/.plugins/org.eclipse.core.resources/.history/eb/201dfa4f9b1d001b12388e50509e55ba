@@ -30,7 +30,6 @@ public class WebserverTest {
 	PipedInputStream inMock, myIn;
 	BufferedReader in;
 	PrintWriter out;
-	String rootFolder = Webserver.rootFolder;
 	
 	@Before
 	public void init() {
