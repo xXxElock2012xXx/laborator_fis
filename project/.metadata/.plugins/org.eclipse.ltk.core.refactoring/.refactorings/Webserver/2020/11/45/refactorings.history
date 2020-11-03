@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;command&apos; in &apos;webserver.Webserver.run()&apos; to &apos;commandLine&apos;&#x0D;&#x0A;- Original project: &apos;Webserver&apos;&#x0D;&#x0A;- Original element: &apos;webserver.Webserver.run().command&apos;&#x0D;&#x0A;- Renamed element: &apos;command&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;command&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/&lt;webserver{Webserver.java[Webserver~run@command!1310!1324!1317!1323!QString;!0!false" name="commandLine" references="true" stamp="1604381300975" version="1.0"/>
+</session>

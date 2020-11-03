@@ -77,7 +77,7 @@ public class WebserverTest {
 			
 			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
 			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
+			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
 			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
 			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
 			bis.read(readData);
@@ -110,7 +110,7 @@ public class WebserverTest {
 			
 			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
 			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
+			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
 			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
 			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
 			bis.read(readData);
@@ -142,7 +142,7 @@ public class WebserverTest {
 			
 			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
 			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
+			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
 			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
 			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
 			bis.read(readData);
@@ -174,7 +174,7 @@ public class WebserverTest {
 			
 			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
 			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
+			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
 			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
 			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
 			bis.read(readData);
@@ -206,7 +206,7 @@ public class WebserverTest {
 			
 			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
 			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());
+			Assert.assertEquals(in.readLine(),"Date: " + new Date()); //? trebuie revizuit
 			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
 			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
 			bis.read(readData);
