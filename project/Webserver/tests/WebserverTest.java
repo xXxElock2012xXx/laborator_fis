@@ -9,12 +9,15 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -31,6 +34,35 @@ public class WebserverTest {
 	BufferedReader in;
 	PrintWriter out;
 	String rootFolder = Webserver.rootFolder;
+	
+	private void TestOut(String command, String filePath) throws IOException, InterruptedException {
+		int fileLength = (int)Files.size(Paths.get(filePath));
+		BufferedReader fileIn = new BufferedReader(new FileReader(new File(filePath)));
+		String fileData=null, readData = null;
+		
+		out.println(command);
+		out.close();
+		
+		
+		String output = in.readLine();
+		Assert.assertEquals(output,"HTTP/1.1 200 OK");
+		output = in.readLine();
+		Assert.assertEquals(output,"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+		//Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+		in.readLine();
+		output = in.readLine();
+		Assert.assertEquals(output,"Server: Content-Type: text/html; charset=UTF-8");
+		output = in.readLine();
+		Assert.assertEquals(output,"Server: Content-Length: " + fileLength);
+		output = in.readLine();
+		Assert.assertEquals(output,"");
+		while((fileData = fileIn.readLine())!=null) {
+			readData = in.readLine();
+			Assert.assertEquals(readData, fileData);
+		}
+		obj.join();
+	}
+	
 	
 	@Before
 	public void init() {
@@ -61,163 +93,189 @@ public class WebserverTest {
 	@Test
 	public void rootTest() {
 		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/index.html");
 			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
+			TestOut("GET / HTTP/1.1", rootFolder+"/index.html");
 			
-			out.println("GET / HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
 		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
-	
 	
 	@Test
 	public void aTest() {
 		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/a.html");
 			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
+			TestOut("GET /a.html HTTP/1.1", rootFolder+"/a.html");
 			
-			out.println("GET /a HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
 		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
 	
 	@Test
 	public void bTest() {
 		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/b.html");
 			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
+			TestOut("GET /b.html HTTP/1.1", rootFolder+"/b.html");
 			
-			out.println("GET /b HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
 		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+	}
+	
+	@Test
+	public void a_bTest() {
+		try {
+			
+			TestOut("GET /a%20b.html HTTP/1.1", rootFolder+"/a b.html");
+			
+		}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
 	
 	@Test
 	public void aaaDirTest() {
 		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/aaa/index.html");
 			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
+			TestOut("GET /aaa/ HTTP/1.1", rootFolder+"/aaa/index.html");
 			
-			out.println("GET /aaa/ HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
 		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
+	
+//	@Test
+//	public void yesImgTest() {
+//		try {
+//			
+//			TestOut("GET /yes.jpg HTTP/1.1", rootFolder+"/yes.jpg");
+//			
+//		}
+//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+//	}
 	
 	@Test
 	public void aaaDir_bTest() {
-		try {
-			int fileLength=0;
-			byte[] fileData, readData;
-			File file = new File("TestSite/aaa/b.html");
+try {
 			
-			fileLength = (int) file.length();
-			fileData = new byte[fileLength+1];
-			readData = new byte[fileLength+1];
-			FileInputStream fileIn = new FileInputStream(file);
-			fileIn.read(fileData);
-			fileIn.close();
+			TestOut("GET /aaa/b.html HTTP/1.1", rootFolder+"/aaa/b.html");
 			
-			out.println("GET /aaa/b.html HTTP/1.1");
-			
-			BufferedInputStream bis = new BufferedInputStream(myIn);
-			
-			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
-			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-			Assert.assertEquals(in.readLine(),"Date: " + new Date()); //? trebuie revizuit
-			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
-			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
-			bis.read(readData);
-			Assert.assertArrayEquals(fileData, readData);
-			
-			obj.join();
 		}
-		catch (IOException e){System.out.println("IOException occured");} 
-		catch (InterruptedException e) {System.out.println("IException occured");}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
+	
+//	@Test
+//	public void aTest() {
+//		try {
+//			
+//			TestOut(rootFolder+"/a.html");
+//			
+//		}
+//		catch (IOException e){e.printStackTrace(); System.out.println("IOException occured");} 
+//		catch (InterruptedException e) {e.printStackTrace(); System.out.println("IException occured");}
+//	}
+//	
+//	@Test
+//	public void bTest() {
+//		try {
+//			int fileLength=0;
+//			byte[] fileData, readData;
+//			File file = new File("TestSite/b.html");
+//			
+//			fileLength = (int) file.length();
+//			fileData = new byte[fileLength+1];
+//			readData = new byte[fileLength+1];
+//			FileInputStream fileIn = new FileInputStream(file);
+//			fileIn.read(fileData);
+//			fileIn.close();
+//			
+//			out.println("GET /b HTTP/1.1");
+//			
+//			BufferedInputStream bis = new BufferedInputStream(myIn);
+//			
+//			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
+//			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+//			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+//			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
+//			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
+//			bis.read(readData);
+//			Assert.assertArrayEquals(fileData, readData);
+//			
+//			obj.join();
+//		}
+//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+//	}
+//	
+//	@Test
+//	public void aaaDirTest() {
+//		try {
+//			TestOut(rootFolder+"/aaa/index.html");
+////			int fileLength=0;
+////			byte[] fileData, readData;
+////			File file = new File("TestSite/aaa/index.html");
+////			
+////			fileLength = (int) file.length();
+////			fileData = new byte[fileLength+1];
+////			readData = new byte[fileLength+1];
+////			FileInputStream fileIn = new FileInputStream(file);
+////			fileIn.read(fileData);
+////			fileIn.close();
+////			
+////			out.println("GET /aaa/ HTTP/1.1");
+////			
+////			BufferedInputStream bis = new BufferedInputStream(myIn);
+////			
+////			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
+////			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+////			Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+////			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
+////			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
+////			bis.read(readData);
+////			Assert.assertArrayEquals(fileData, readData);
+////			
+////			obj.join();
+//		}
+//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+//	}
+//	
+//	@Test
+//	public void aaaDir_bTest() {
+//		try {
+//			
+//			TestOut(rootFolder+"/aaa/b.html");
+////			int fileLength=0;
+////			byte[] fileData, readData;
+////			File file = new File("TestSite/aaa/b.html");
+////			
+////			fileLength = (int) file.length();
+////			fileData = new byte[fileLength+1];
+////			readData = new byte[fileLength+1];
+////			FileInputStream fileIn = new FileInputStream(file);
+////			fileIn.read(fileData);
+////			fileIn.close();
+////			
+////			out.println("GET /aaa/b.html HTTP/1.1");
+////			
+////			BufferedInputStream bis = new BufferedInputStream(myIn);
+////			
+////			Assert.assertEquals(in.readLine(),"HTTP/1.1 200 OK");
+////			Assert.assertEquals(in.readLine(),"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+////			Assert.assertEquals(in.readLine(),"Date: " + new Date()); //? trebuie revizuit
+////			Assert.assertEquals(in.readLine(),"Content-Type: text/html; charset=UTF-8");
+////			Assert.assertEquals(in.readLine(),"Content-Length: " + fileLength);
+////			bis.read(readData);
+////			Assert.assertArrayEquals(fileData, readData);
+////			
+////			obj.join();
+//		}
+//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+//	}
 	
 //	@Test
 //	public void emptyTest() {

@@ -2,40 +2,42 @@ package webserver;
 
 import java.net.*;
 import java.util.Date;
-
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.*;
 
 public class Webserver extends Thread {
 	protected Socket clientSocket;
-	public static final String rootFolder = "TestSite";
-//	public static void main(String[] args) throws IOException {
-//		ServerSocket serverSocket = null;
-//
-//		try {
-//			serverSocket = new ServerSocket(10008);
-//			System.out.println("Connection Socket Created");
-//			try {
-//				while (true) {
-//					System.out.println("Waiting for Connection");
-//					new Webserver(serverSocket.accept());
-//				}
-//			} catch (IOException e) {
-//				System.err.println("Accept failed.");
-//				System.exit(1);
-//			}
-//		} catch (IOException e) {
-//			System.err.println("Could not listen on port: 10008.");
-//			System.exit(1);
-//		} finally {
-//			try {
-//				serverSocket.close();
-//			} catch (IOException e) {
-//				System.err.println("Could not close port: 10008.");
-//				System.exit(1);
-//			}
-//		}
-//	}
+	public static final String rootFolder = "/home/fenix/git/VVS/project/TestSite";
+	private String fileType;
+	public static void main(String[] args) throws IOException {
+		ServerSocket serverSocket = null;
+
+		try {
+			serverSocket = new ServerSocket(10008);
+			System.out.println("Connection Socket Created");
+			try {
+				while (true) {
+					System.out.println("Waiting for Connection");
+					new Webserver(serverSocket.accept());
+				}
+			} catch (IOException e) {
+				System.err.println("Accept failed.");
+				System.exit(1);
+			}
+		} catch (IOException e) {
+			System.err.println("Could not listen on port: 10008.");
+			System.exit(1);
+		} finally {
+			try {
+				serverSocket.close();
+			} catch (IOException e) {
+				System.err.println("Could not close port: 10008.");
+				System.exit(1);
+			}
+		}
+	}
 
 	public Webserver(Socket clientSoc) {
 		clientSocket = clientSoc;
@@ -43,8 +45,9 @@ public class Webserver extends Thread {
 	}
 
 	public void run() {
-		System.out.println("New Communication Thread Started");
+//		System.out.println("New Communication Thread Started");
 		PrintWriter out=null;
+//		PrintStream out = System.out;
 		BufferedReader in=null;
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(),
@@ -58,7 +61,7 @@ public class Webserver extends Thread {
 			do {
 				if (inputLine.trim().equals(""))
 					break;
-				
+				//out.println(inputLine);
 				System.out.println("Server: " + inputLine);
 			}while ((inputLine = in.readLine()) != null);
 			if(commandLine==null) {
@@ -70,8 +73,26 @@ public class Webserver extends Thread {
 			String requestedFile = commandLine.substring(0, commandLine.lastIndexOf("HTTP/")).trim();
 			requestedFile = Webserver.rootFolder + requestedFile;
 			
-			if(requestedFile.endsWith("/"))
+			if(requestedFile.endsWith("/")) {
 				requestedFile = requestedFile + "index.html"; // in index.html tin minte linkuri catre pagini
+			}
+			
+			requestedFile = requestedFile.replaceAll("%20", " ");
+			
+			switch(requestedFile.substring(requestedFile.lastIndexOf('.'))) {
+			case ".html":
+				fileType = "text/html; charset=UTF-8";
+				break;
+			case ".txt":
+				fileType = "text/html; charset=UTF-8";
+				break;
+			case ".ico":
+				fileType = "image/png";
+				break;
+			case ".jpg":
+				fileType = "image/jpg";
+				break;
+			}
 			
 			switch(method) {
 			case "HEAD": 
@@ -82,14 +103,14 @@ public class Webserver extends Thread {
 				
 				out.println("HTTP/1.1 200 OK");
 				out.println("Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
-				out.println("Date: " + new Date());
-				out.println("Content-Type: text/html; charset=UTF-8");
-				out.println("Content-Length: " + fileContent.length);
+				out.println("Server: Date: " + new Date());
+				out.println("Server: Content-Type: " + fileType);
+				out.println("Server: Content-Length: " + fileContent.length);
 				out.println();
-				out.println(fileContent.content);
+				clientSocket.getOutputStream().write(fileContent.content);
 				}
 				catch(FileNotFoundException e) {
-					//To be implemented
+					e.printStackTrace();
 				}
 				break;
 			default:
@@ -98,10 +119,15 @@ public class Webserver extends Thread {
 			
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.err.println("Problem with Communication Server");
 			System.exit(1);
 		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		finally {
+			System.out.println();
 			if(out!=null)
 				out.close();
 			if(in!=null)
@@ -121,11 +147,11 @@ public class Webserver extends Thread {
 		}
 	}
 	
-	private Pair readFile(String filePath) throws FileNotFoundException {
+	private Pair readFile(String filePath) throws IOException {
 		Pair retVal = new Pair();
 		
-		File f = new File(filePath);
-		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
+		retVal.length = (int)Files.size(Paths.get(filePath));
+		retVal.content = Files.readAllBytes(Paths.get(filePath));
 		
 		return retVal;
 	}
