@@ -8,6 +8,7 @@ public class TestsMain {
 	public static void main(String[] argv) {
 		Result result = JUnitCore.runClasses(WebserverTest.class);
 		
+		
 	    for (Failure failure : result.getFailures()) {
 	       System.out.println(failure.toString());
 	    }
