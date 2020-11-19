@@ -66,9 +66,16 @@ public class Webserver extends Thread {
 			}while ((inputLine = in.readLine()) != null);
 			if(commandLine==null) {
 				System.out.println("Error ");
+				System.exit(-1);
 			}
 			
-			String method = commandLine.substring(0, commandLine.indexOf(' '));
+			int indexSp=commandLine.indexOf(' ');
+			if(indexSp == -1) {
+				System.out.println("Format incorect");
+				System.exit(-1);
+			}
+			
+			String method = commandLine.substring(0, indexSp);
 			commandLine = commandLine.substring(commandLine.indexOf(' ')+1);
 			String requestedFile = commandLine.substring(0, commandLine.lastIndexOf("HTTP/")).trim();
 			requestedFile = Webserver.rootFolder + requestedFile;
