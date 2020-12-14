@@ -142,16 +142,71 @@ public class WebserverTest {
 		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
 	
-//	@Test
-//	public void yesImgTest() {
-//		try {
-//			
-//			TestOut("GET /yes.jpg HTTP/1.1", rootFolder+"/yes.jpg");
-//			
-//		}
-//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
-//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
-//	}
+	@Test
+	public void yesImgTest() {  //pentru jpg nu am mai facut o functie care factorizeaza continutul, deoarece aveam deja o structura functionala
+		try {
+			int fileLength = (int)Files.size(Paths.get(rootFolder + "/yes.jpg"));
+			BufferedReader fileIn = new BufferedReader(new FileReader(new File(rootFolder + "/yes.jpg")));
+			int fileData, readData;
+			
+			out.println("GET /yes.jpg HTTP/1.1");
+			out.close();
+			
+			
+			String output = in.readLine();
+			Assert.assertEquals(output,"HTTP/1.1 200 OK");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+			//Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+			in.readLine();  //probleme cu Data, new Date() ia data curenta prea in detaliu, si nu are cum sa se potriveasca; trebuie sa fac o comparatie "partiala", fara secunde/milisecunde sau unde da eroare
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Type: image/jpg");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Length: " + fileLength);
+			output = in.readLine();
+			Assert.assertEquals(output,"");
+			while((fileData = fileIn.read())!=-1) {
+				readData = in.read();
+				Assert.assertEquals(readData, fileData);
+			}
+			obj.join();
+		}catch(Throwable t) {
+			t.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void ye_sImgTest() {
+		try {
+			int fileLength = (int)Files.size(Paths.get(rootFolder + "/ye s.jpg"));
+			BufferedReader fileIn = new BufferedReader(new FileReader(new File(rootFolder + "/ye s.jpg")));
+			int fileData, readData;
+			
+			out.println("GET /ye%20s.jpg HTTP/1.1");
+			out.close();
+			
+			
+			String output = in.readLine();
+			Assert.assertEquals(output,"HTTP/1.1 200 OK");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+			//Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+			in.readLine();  //probleme cu Data, new Date() ia data curenta prea in detaliu, si nu are cum sa se potriveasca; trebuie sa fac o comparatie "partiala", fara secunde/milisecunde sau unde da eroare
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Type: image/jpg");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Length: " + fileLength);
+			output = in.readLine();
+			Assert.assertEquals(output,"");
+			while((fileData = fileIn.read())!=-1) {
+				readData = in.read();
+				Assert.assertEquals(readData, fileData);
+			}
+			obj.join();
+		}catch(Throwable t) {
+			t.printStackTrace();
+		}
+	}
 	
 	@Test
 	public void aaaDir_bTest() {
@@ -163,6 +218,59 @@ try {
 		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
 		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
 	}
+	
+	@Test
+	public void aaaDir_bbbDir_yesImgTest() {
+		try {
+			int fileLength = (int)Files.size(Paths.get(rootFolder + "/aaa/bbb/yes.jpg"));
+			BufferedReader fileIn = new BufferedReader(new FileReader(new File(rootFolder + "/aaa/bbb/yes.jpg")));
+			int fileData, readData;
+			
+			out.println("GET /aaa/bbb/yes.jpg HTTP/1.1");
+			out.close();
+			
+			
+			String output = in.readLine();
+			Assert.assertEquals(output,"HTTP/1.1 200 OK");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+			//Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+			in.readLine();  //probleme cu Data, new Date() ia data curenta prea in detaliu, si nu are cum sa se potriveasca; trebuie sa fac o comparatie "partiala", fara secunde/milisecunde sau unde da eroare
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Type: image/jpg");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Length: " + fileLength);
+			output = in.readLine();
+			Assert.assertEquals(output,"");
+			while((fileData = fileIn.read())!=-1) {
+				readData = in.read();
+				Assert.assertEquals(readData, fileData);
+			}
+			obj.join();
+		}catch(Throwable t) {
+			t.printStackTrace();
+		}
+	}
+	
+//	@Test
+//	public void a_bTest() { //css test
+//		try {
+//			
+//			TestOut("GET /a%20b.html HTTP/1.1", rootFolder+"/a b.html");
+//			
+//		}
+//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+//	}
+	
+	
+	
+	
+	
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Incercari vechi si esuate
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	
 //	@Test
 //	public void aTest() {
@@ -302,4 +410,4 @@ try {
 //		catch (InterruptedException e) {}	
 //	}
 	
-}
+//}
