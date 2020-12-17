@@ -99,11 +99,27 @@ public class Webserver extends Thread {
 			case ".jpg":
 				fileType = "image/jpg";
 				break;
+			case ".css":
+				fileType = "text/css; charset=UTF-8";
+				break;
 			}
 			
 			switch(method) {
 			case "HEAD": 
-				
+				try {
+					Pair fileContent = readFile(requestedFile);
+					
+					out.println("HTTP/1.1 200 OK");
+					out.println("Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+					out.println("Server: Date: " + new Date());
+					out.println("Server: Content-Type: " + fileType);
+					out.println("Server: Content-Length: " + fileContent.length);
+					out.println();
+					}
+					catch(FileNotFoundException e) {
+						e.printStackTrace();
+					}
+					break;
 			case "GET":
 				try {
 				Pair fileContent = readFile(requestedFile);

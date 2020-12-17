@@ -252,16 +252,41 @@ try {
 		}
 	}
 	
-//	@Test
-//	public void a_bTest() { //css test
-//		try {
-//			
-//			TestOut("GET /a%20b.html HTTP/1.1", rootFolder+"/a b.html");
-//			
-//		}
-//		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
-//		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
-//	}
+	@Test
+	public void cssTest() { //css test
+		try {
+			
+			int fileLength = (int)Files.size(Paths.get(rootFolder+"/style.css"));
+			BufferedReader fileIn = new BufferedReader(new FileReader(new File(rootFolder+"/style.css")));
+			String fileData=null, readData = null;
+			
+			out.println("GET /style.css HTTP/1.1");
+			out.close();
+			
+			
+			String output = in.readLine();
+			Assert.assertEquals(output,"HTTP/1.1 200 OK");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Java HTTP Server upt.ac.SSC.AlexPescaru : 1.0");
+			//Assert.assertEquals(in.readLine(),"Date: " + new Date());//? trebuie revizuit
+			in.readLine();
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Type: text/css; charset=UTF-8");
+			output = in.readLine();
+			Assert.assertEquals(output,"Server: Content-Length: " + fileLength);
+			output = in.readLine();
+			Assert.assertEquals(output,"");
+			while((fileData = fileIn.readLine())!=null) {
+				readData = in.readLine();
+				Assert.assertEquals(readData, fileData);
+			}
+			obj.join();
+			
+			
+		}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+	}
 	
 	
 	
