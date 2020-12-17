@@ -253,6 +253,17 @@ try {
 	}
 	
 	@Test
+	public void txtTest() {
+try {
+			
+			TestOut("GET /a.txt HTTP/1.1", rootFolder+"/a.txt");
+			
+		}
+		catch (IOException e){System.out.println("IOException occured"); e.printStackTrace(); Assert.fail();} 
+		catch (InterruptedException e) {System.out.println("IException occured"); e.printStackTrace(); Assert.fail();}
+	}
+	
+	@Test
 	public void cssTest() { //css test
 		try {
 			
