@@ -13,5 +13,7 @@
 	<classpathentry kind="lib" path="/home/fenix/Documents/selenium/libs/okhttp-3.11.0.jar"/>
 	<classpathentry kind="lib" path="/home/fenix/Documents/selenium/libs/okio-1.14.0.jar"/>
 	<classpathentry kind="lib" path="/home/fenix/Documents/selenium/selenium-java-3.141.59.zip"/>
+	<classpathentry kind="lib" path="/home/fenix/Documents/selenium/client-combined-3.141.59.jar"/>
+	<classpathentry kind="lib" path="/home/fenix/Documents/selenium/client-combined-3.141.59-sources.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
