@@ -3,7 +3,6 @@ package webserver;
 import java.net.*;
 import java.util.Date;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.*;
 
