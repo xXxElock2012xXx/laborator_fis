@@ -101,6 +101,7 @@ public class WebTest {
 		
 	}
 	
+	//2 teste daca functioneaza <a href=""></a>
 	@Test
 	public void a_b_html_pageLoadFromIndexLinkClick() {
 		//acces "localhost:10008" then try to get to "a b"
@@ -109,5 +110,37 @@ public class WebTest {
 		driver.findElement(By.linkText("a b")).click();
 		
 		Assert.assertEquals("/a b", driver.getTitle());
+	}
+	
+	@Test
+	public void index_a_b_a_link() {
+		//acces "localhost:10008" then try to get to "a.html" then to "a b.html"
+		driver.get("localhost:10008");
+		
+		driver.findElement(By.linkText("a b")).click();
+		driver.findElement(By.linkText("back")).click();
+		
+		Assert.assertEquals("Welcome!", driver.getTitle());
+	}
+	
+	//test input text box with submit button that clears the input
+	@Test
+	public void verifyInputTextBox() {
+		driver.get("localhost:10008/a b.html");
+		WebElement e = driver.findElement(By.id("idimp"));
+		Assert.assertEquals("", e.getAttribute("value"));
+		e.sendKeys("id-test");
+		Assert.assertEquals("id-test", e.getAttribute("value"));
+	}
+	
+	@Test
+	public void verifyInputTextBoxAndClearButton() {
+		driver.get("localhost:10008/a b.html");
+		WebElement e = driver.findElement(By.id("idimp"));
+		Assert.assertEquals("", e.getAttribute("value"));
+		e.sendKeys("id-test");
+		Assert.assertEquals("id-test", e.getAttribute("value"));
+		driver.findElement(By.name("clickButton")).click();
+		Assert.assertEquals("", e.getAttribute("value"));
 	}
 }
