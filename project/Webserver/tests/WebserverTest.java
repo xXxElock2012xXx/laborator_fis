@@ -32,6 +32,8 @@ public class WebserverTest {
 	PrintWriter out;
 	String rootFolder = Webserver.rootFolder;
 	
+	//am folosit functia asta ca si o generalizare pentru fisierele html si txt
+	//am preferat sa folosesc asta pentru html si txt pentru a nu mai da copy-paste, tinand cont ca html si txt sunt majoritatea testelor
 	private void TestOut(String command, String filePath) throws IOException, InterruptedException {
 		int fileLength = (int)Files.size(Paths.get(filePath));
 		BufferedReader fileIn = new BufferedReader(new FileReader(new File(filePath)));
@@ -66,6 +68,8 @@ public class WebserverTest {
 //		mockSocket = mock(Socket.class);
 		
 		try {
+			//pentru mocking am scris propria clasa, si am folosit pipeuri pentru comunicare intre program (care rula in thread) si test case-uri, 
+			//am preferat varianta asta peste cea in care sa folosesc alte socketuri pentru comunicarea intre procese
 			myOut = new PipedOutputStream();
 			outMock = new PipedOutputStream();
 			
@@ -268,7 +272,7 @@ try {
 	}
 	
 	@Test
-	public void cssTest() { //css test
+	public void cssTest() { //css test - nu am adaugat mai mult de un fisier css in cadrul testelor (fisierelor ce pot fi accesate prin intermediul serverului)
 		try {
 			
 			int fileLength = (int)Files.size(Paths.get(rootFolder+"/style.css"));
@@ -308,8 +312,10 @@ try {
 	
 	
 }
+
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Incercari vechi si esuate
+// Incercari vechi si esuate -- am preferat sa le las in program, doar de idee
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	
 //	@Test

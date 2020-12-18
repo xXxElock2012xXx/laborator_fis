@@ -79,12 +79,13 @@ public class Webserver extends Thread {
 			String requestedFile = commandLine.substring(0, commandLine.lastIndexOf("HTTP/")).trim();
 			requestedFile = Webserver.rootFolder + requestedFile;
 			
-			if(requestedFile.endsWith("/")) {
+			if(requestedFile.endsWith("/")) { //vad daca e un folder sau nu
 				requestedFile = requestedFile + "index.html"; // in index.html tin minte linkuri catre pagini
 			}
 			
-			requestedFile = requestedFile.replaceAll("%20", " ");
+			requestedFile = requestedFile.replaceAll("%20", " "); //inlocuiesc %20 cu spatiu pentru a fi corecte numele
 			
+			//aici iau tipul fisierului ce trebuie trimis
 			switch(requestedFile.substring(requestedFile.lastIndexOf('.'))) {
 			case ".html":
 				fileType = "text/html; charset=UTF-8";
@@ -103,7 +104,7 @@ public class Webserver extends Thread {
 				break;
 			}
 			
-			switch(method) {
+			switch(method) { //aici determin ce functie a fost chemata - in cazul de fata doar head si get
 			case "HEAD": 
 				try {
 					Pair fileContent = readFile(requestedFile);

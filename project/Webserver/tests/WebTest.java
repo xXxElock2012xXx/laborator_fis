@@ -55,7 +55,7 @@ public class WebTest {
 	
 	@BeforeClass
 	public static void fstInit() {
-		System.setProperty("webdriver.gecko.driver","/usr/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver","/usr/bin/geckodriver"); //creez contextul si var globale
 	}
 	
 	@Before
@@ -150,7 +150,7 @@ public class WebTest {
 	}
 	
 	@Test
-	public void verifyInputTextBoxAndClearButton() {
+	public void verifyInputTextBoxAndClearButton() { //in html clear button e butonul de submit id
 		try {
 			driver.get("localhost:10008/a b.html");
 			WebElement e = driver.findElement(By.id("idimp"));
