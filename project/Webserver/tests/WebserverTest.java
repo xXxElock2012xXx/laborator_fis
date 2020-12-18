@@ -84,6 +84,7 @@ public class WebserverTest {
 		}
 		catch(IOException e) {
 			System.out.println("Exception occured");
+			Assert.fail();
 		}
 	}
 	
@@ -172,6 +173,7 @@ public class WebserverTest {
 			obj.join();
 		}catch(Throwable t) {
 			t.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -205,6 +207,7 @@ public class WebserverTest {
 			obj.join();
 		}catch(Throwable t) {
 			t.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -249,6 +252,7 @@ try {
 			obj.join();
 		}catch(Throwable t) {
 			t.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
