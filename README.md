@@ -13,3 +13,6 @@ in folderul "project" se afla folderle TestSite in care sunt paginile/fisierle t
 # Server implementation and test suit
 
 implementation for a html server and test suits for unitesting - JUnit and web testing - Selenium plugin (I used plugin for firefox)
+
+## License
+License unde [BSD-3-clause](https://github.com/UnProgramator/VVS/blob/main/LICENSE)
